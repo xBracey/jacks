@@ -1,6 +1,11 @@
 {
 	"prettier.useTabs": true,
 	"prettier.trailingComma": "es5",
+	"editor.autoClosingQuotes": "always",
+	"editor.autoClosingBrackets": "always",
 	"editor.formatOnSave": true,
 	"blueprint.templatesPath": ["./.vscode/.templates"]
+	// "editor.codeActionsOnSave": {
+	// 	"source.fixAll": true
+	// }
 }

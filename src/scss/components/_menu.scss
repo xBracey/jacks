@@ -1,0 +1,12 @@
+.menu {
+	display: flex;
+	justify-content: center;
+
+	input {
+		margin: 20px;
+	}
+
+	input[type="number"] {
+		text-align: center;
+	}
+}

@@ -1,0 +1,22 @@
+.board {
+	display: flex;
+	position: relative;
+	flex-wrap: wrap;
+	background-image: url("/assets/table.png");
+	height: 600px;
+	width: 100%;
+	border-radius: 50px;
+
+	.active-cards {
+		position: absolute;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		top: 242px;
+		left: calc(50% - 97px);
+
+		.card {
+			margin: 0px 10px;
+		}
+	}
+}

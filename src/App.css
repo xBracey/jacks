@@ -1,38 +1,77 @@
-.App {
-	text-align: center;
-}
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 100px;
+  background-color: black;
+  min-height: calc(100vh); }
+  .main .main-container {
+    width: 100%;
+    max-width: 1500px;
+    height: 100%;
+    min-height: calc(100vh - 100px);
+    padding: 50px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center; }
 
-.App-logo {
-	height: 40vmin;
-	pointer-events: none;
-}
+.menu {
+  display: flex;
+  justify-content: center; }
+  .menu input {
+    margin: 20px; }
+  .menu input[type="number"] {
+    text-align: center; }
 
-@media (prefers-reduced-motion: no-preference) {
-	.App-logo {
-		animation: App-logo-spin infinite 20s linear;
-	}
-}
+.board {
+  display: flex;
+  position: relative;
+  flex-wrap: wrap;
+  background-image: url("/assets/table.png");
+  height: 600px;
+  width: 100%;
+  border-radius: 50px; }
+  .board .active-cards {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 242px;
+    left: calc(50% - 97px); }
+    .board .active-cards .card {
+      margin: 0px 10px; }
 
-.App-header {
-	background-color: #282c34;
-	min-height: 100vh;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	font-size: calc(10px + 2vmin);
-	color: white;
-}
+.hand {
+  display: flex;
+  align-items: center;
+  width: calc(50% - 50px);
+  padding-left: 50px; }
 
-.App-link {
-	color: #61dafb;
-}
+.hand:nth-child(2n) {
+  justify-content: flex-start; }
+  .hand:nth-child(2n) .card {
+    margin-right: -50px; }
 
-@keyframes App-logo-spin {
-	from {
-		transform: rotate(0deg);
-	}
-	to {
-		transform: rotate(360deg);
-	}
-}
+.hand:nth-child(2n-1) {
+  justify-content: flex-end; }
+  .hand:nth-child(2n-1) .card {
+    margin-left: -50px; }
+
+.hand:last-child {
+  width: 100%;
+  justify-content: center;
+  padding-left: 0px;
+  padding-bottom: 20px;
+  align-items: flex-end; }
+  .hand:last-child .card {
+    margin: 0px 2px; }
+
+.card {
+  width: 77px;
+  height: 117px;
+  border: 3px solid transparent;
+  border-radius: 10px; }
+
+img.card.hover {
+  border: 3px solid black; }

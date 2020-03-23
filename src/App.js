@@ -1,28 +1,36 @@
-import React from "react";
-import logo from "./logo.svg";
+import React, { useState } from "react";
+import Board from "./components/board";
+import Menu from "./components/menu";
 import "./App.css";
 
-class Test extends React.Component {
-	render() {
-		return (
-			<div className="App">
-				<header className="App-header">
-					<img src={logo} className="App-logo" alt="logo" />
-					<p>
-						Edit <code>src/App.js</code> and save to reload
-					</p>
-					<a
-						className="App-link"
-						href="https://reactjs.org"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						Learn React
-					</a>
-				</header>
-			</div>
-		);
-	}
-}
+const App = () => {
+	const [players, setPlayers] = useState(null);
+	const [turn, setTurn] = useState(0);
+	const [winningPlayer, setWinningPlayer] = useState(null);
 
-export default Test;
+	const playerMessage = winningPlayer
+		? `Player ${winningPlayer} has won!`
+		: players
+		? `Player ${turn}'s turn`
+		: "Player number has not been set";
+
+	return (
+		<div className="main">
+			<div className="main-container">
+				<h1>Jacks, Twos and Eights</h1>
+				<p>{playerMessage}</p>
+
+				<Board
+					players={players}
+					turn={turn}
+					setTurn={setTurn}
+					setPlayers={setPlayers}
+					setWinningPlayer={setWinningPlayer}
+				/>
+				<Menu setPlayers={setPlayers} setWinningPlayer={setWinningPlayer} />
+			</div>
+		</div>
+	);
+};
+
+export default App;
