@@ -1,7 +1,7 @@
 import React, { useEffect, useContext, useState } from "react";
 import Card from "./card";
 import { CardContext, cardContexts } from "../lib/cards";
-import { checkCards, makeTurn } from "../lib/ai";
+import { checkCards, makeTurn, moveCards } from "../lib/ai";
 
 const Hand = props => {
 	const cardContext = useContext(CardContext);
@@ -18,13 +18,12 @@ const Hand = props => {
 			const deckCopy = [...props.deck];
 
 			props.setMakingTurn(true);
-			const cardIndex = makeTurn(deckCopy, handCopy);
+			const selectedCards = makeTurn(deckCopy, handCopy);
 
-			if (cardIndex === -1) {
+			if (!selectedCards) {
 				handCopy.push(deckCopy.pop());
 			} else {
-				deckCopy.unshift(handCopy[cardIndex]);
-				handCopy.splice(cardIndex, 1);
+				moveCards(selectedCards, deckCopy, handCopy);
 			}
 
 			setTimeout(() => {
@@ -33,7 +32,7 @@ const Hand = props => {
 
 				props.setDeck(deckCopy);
 				props.turnFinished(handsCopy);
-			}, 500);
+			}, 2000);
 		}
 	}, [props, cardContext]);
 
@@ -68,22 +67,12 @@ const Hand = props => {
 			.sort(([key1, value1], [key2, value2]) => value1.number - value2.number)
 			.map(([key, value]) => key);
 
-		const handIndexes = Object.keys(selectedCards).sort(
-			(key1, key2) => key2 - key1
-		);
-
 		if (
 			props.activeTurn &&
 			cardContext === cardContexts.PLAYER &&
 			checkCards(props.deck, selectedCards, deckIndexes)
 		) {
-			deckIndexes.forEach(index => {
-				deckCopy.unshift(handCopy[index]);
-			});
-
-			handIndexes.forEach(index => {
-				handCopy.splice(index, 1);
-			});
+			moveCards(selectedCards, deckCopy, handCopy);
 
 			handsCopy[props.index] = handCopy;
 

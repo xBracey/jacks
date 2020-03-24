@@ -5,8 +5,15 @@ const Card = props => {
 	const cardContext = useContext(CardContext);
 	const [hover, setHover] = useState(false);
 
+	// const cardImage =
+	// 	cardContext === cardContexts.PILE || cardContext === cardContexts.PLAYER
+	// 		? props.card.image
+	// 		: "/assets/cards/red_back.png";
+
 	const cardImage =
-		cardContext === cardContexts.PILE || cardContext === cardContexts.PLAYER
+		cardContext === cardContexts.PILE ||
+		cardContext === cardContexts.PLAYER ||
+		cardContext === cardContexts.OPPONENT
 			? props.card.image
 			: "/assets/cards/red_back.png";
 
