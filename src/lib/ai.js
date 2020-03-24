@@ -16,6 +16,24 @@ export const makeTurn = (deck, hand) => {
 	return cardIndex;
 };
 
-export const checkCard = (deck, card) => {
-	return deck[0].cardNumber === card.cardNumber || deck[0].suit === card.suit;
+export const checkCards = (deck, cards, deckIndexes) => {
+	const cardValues = Object.values(cards);
+	if (!cardValues.length) {
+		return false;
+	} else {
+		if (cardValues.some(card => card.cardNumber !== cardValues[0].cardNumber)) {
+			return false;
+		}
+
+		const pileCard = deck[0];
+
+		if (
+			cards[deckIndexes[0]].cardNumber !== pileCard.cardNumber &&
+			cards[deckIndexes[0]].suit !== pileCard.suit
+		) {
+			return false;
+		}
+	}
+
+	return true;
 };

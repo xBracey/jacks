@@ -16,6 +16,13 @@ const Card = props => {
 			? "hover"
 			: "";
 
+	const renderSelectedMask = () => {
+		if (props.selected && props.selectedNumber) {
+			return <div className="selected-mask">{props.selectedNumber}</div>;
+		}
+		return null;
+	};
+
 	return (
 		<div
 			className={`card-container`}
@@ -23,6 +30,7 @@ const Card = props => {
 			onMouseLeave={() => setHover(false)}
 			onClick={props.onClick}
 		>
+			{renderSelectedMask()}
 			<img src={cardImage} alt="card" className={`card ${hoverClass}`} />
 		</div>
 	);

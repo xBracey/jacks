@@ -1,10 +1,30 @@
-.card {
-	width: 77px;
-	height: 117px;
-	border: 3px solid transparent;
-	border-radius: 10px;
-}
+.card-container {
+	position: relative;
 
-img.card.hover {
-	border: 3px solid black;
+	.card {
+		width: 77px;
+		height: 117px;
+		border: 3px solid transparent;
+		border-radius: 10px;
+	}
+
+	img.card.hover {
+		border: 3px solid black;
+	}
+
+	.selected-mask {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		opacity: 0.75;
+		background-color: green;
+		color: white;
+		font-size: 40px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		border-radius: 10px;
+	}
 }

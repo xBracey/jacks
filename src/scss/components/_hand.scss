@@ -3,6 +3,27 @@
 	align-items: center;
 	width: calc(50% - 50px);
 	padding-left: 50px;
+
+	.submit-turn-container {
+		height: 87px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding: 20px;
+
+		.submit-turn {
+			height: 50px;
+			width: 150px;
+			background-color: white;
+			color: black;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			border-radius: 25px;
+			font-weight: bold;
+			cursor: pointer;
+		}
+	}
 }
 
 .hand:nth-child(2n) {

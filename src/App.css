@@ -47,6 +47,23 @@
   align-items: center;
   width: calc(50% - 50px);
   padding-left: 50px; }
+  .hand .submit-turn-container {
+    height: 87px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px; }
+    .hand .submit-turn-container .submit-turn {
+      height: 50px;
+      width: 150px;
+      background-color: white;
+      color: black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 25px;
+      font-weight: bold;
+      cursor: pointer; }
 
 .hand:nth-child(2n) {
   justify-content: flex-start; }
@@ -67,11 +84,26 @@
   .hand:last-child .card {
     margin: 0px 2px; }
 
-.card {
-  width: 77px;
-  height: 117px;
-  border: 3px solid transparent;
-  border-radius: 10px; }
-
-img.card.hover {
-  border: 3px solid black; }
+.card-container {
+  position: relative; }
+  .card-container .card {
+    width: 77px;
+    height: 117px;
+    border: 3px solid transparent;
+    border-radius: 10px; }
+  .card-container img.card.hover {
+    border: 3px solid black; }
+  .card-container .selected-mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0.75;
+    background-color: green;
+    color: white;
+    font-size: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px; }

@@ -38,17 +38,17 @@ const Board = props => {
 		setDeck(newDeck);
 	}, [props.players]);
 
-	const turnFinished = () => {
-		if (hands.some(hand => hand.length === 0)) {
-			const winningPlayer = hands.findIndex(hand => hand.length === 0);
+	const turnFinished = newHands => {
+		if (newHands.some(hand => hand.length === 0)) {
+			const winningPlayer = newHands.findIndex(hand => hand.length === 0);
 			setHands([]);
 			props.setWinningPlayer(winningPlayer);
+		} else {
+			const newTurn = (turn + 1) % players;
+
+			setTurn(newTurn);
+			setMakingTurn(false);
 		}
-
-		const newTurn = (turn + 1) % players;
-
-		setTurn(newTurn);
-		setMakingTurn(false);
 	};
 
 	const onDeckClick = () => {
@@ -65,7 +65,7 @@ const Board = props => {
 			setHands(handsCopy);
 
 			setDeck(deckCopy);
-			turnFinished();
+			turnFinished(handsCopy);
 		}
 	};
 
