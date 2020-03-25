@@ -1,61 +1,110 @@
-export const makeTurn = (deck, hand) => {
-	let cardFound = false;
-	let selectedCards = {};
-	const pileCard = deck[0];
+export const findLatestCard = selectedCards => {
+	let latestCard = null;
+
+	Object.values(selectedCards).forEach(card => {
+		if (!latestCard || latestCard.cardNumber < card.cardNumber) {
+			latestCard = card;
+		}
+	});
+
+	return latestCard;
+};
+
+const eightMatchingRegex = /^((([1-79AJQKT])([DSCH])8\4(8[DSCH])*)|((8[DSCH]){2,}))$/g;
+
+const createLargestSequence = (sequence, hand) => {
+	let largestSequence = sequence;
+
+	if (!hand.length) {
+		return largestSequence;
+	}
 
 	for (let index = 0; index < hand.length; index++) {
 		const card = hand[index];
+		const newSequence = sequence + card.cardNumber + card.suit;
 		if (
-			card.cardNumber === pileCard.cardNumber ||
-			card.suit === pileCard.suit
+			!!newSequence.match(cardMatchingRegex) ||
+			!!newSequence.match(eightMatchingRegex)
 		) {
-			selectedCards[index] = hand[index];
-			cardFound = true;
-			break;
+			const newLargestSequence = createLargestSequence(newSequence, [
+				...hand.slice(0, index),
+				...hand.slice(index + 1),
+			]);
+			if (
+				newLargestSequence.length > largestSequence.length &&
+				!!newLargestSequence.match(cardMatchingRegex)
+			) {
+				largestSequence = newLargestSequence;
+			}
 		}
 	}
 
-	if (!cardFound) {
+	return largestSequence;
+};
+
+const convertSequenceToSelectedCards = (sequence, hand) => {
+	let sequenceCopy = sequence.slice(2);
+	let cardCountNumber = 0;
+
+	if (!sequenceCopy.length) {
 		return false;
 	}
 
-	const firstCard = Object.values(selectedCards)[0];
+	const selectedCards = {};
+	let newCardSequence = "";
+	let newCardIndex = 0;
+	let newCard = {};
 
-	for (let index = 0; index < hand.length; index++) {
-		const card = hand[index];
-		if (
-			card.cardNumber === firstCard.cardNumber &&
-			card.suit !== firstCard.suit
-		) {
-			selectedCards[index] = hand[index];
+	while (sequenceCopy.length) {
+		newCardSequence = sequenceCopy.slice(0, 2);
+		sequenceCopy = sequenceCopy.slice(2);
+		newCardIndex = hand.findIndex(
+			card =>
+				card.cardNumber === newCardSequence[0] &&
+				card.suit === newCardSequence[1]
+		);
+		if (newCardIndex === -1) {
+			console.log(newCardSequence);
+			return false;
 		}
-	}
 
-	console.log(selectedCards);
+		newCard = hand[newCardIndex];
+		newCard.number = cardCountNumber;
+		selectedCards[newCardIndex] = { ...newCard };
+		cardCountNumber++;
+	}
 
 	return selectedCards;
 };
 
-export const checkCards = (deck, cards, deckIndexes) => {
-	const cardValues = Object.values(cards);
-	if (!cardValues.length) {
-		return false;
-	} else {
-		if (cardValues.some(card => card.cardNumber !== cardValues[0].cardNumber)) {
-			return false;
-		}
+export const makeTurn = (deck, hand) => {
+	let pileCard = deck[0];
 
-		const pileCard = deck[0];
+	const startSequence = pileCard.cardNumber + pileCard.suit;
+	const largestSequence = createLargestSequence(startSequence, hand);
 
-		if (
-			cards[deckIndexes[0]].cardNumber !== pileCard.cardNumber &&
-			cards[deckIndexes[0]].suit !== pileCard.suit
-		) {
-			return false;
-		}
+	const selectedCards = convertSequenceToSelectedCards(largestSequence, hand);
+
+	return selectedCards;
+};
+
+export const createCardSequence = (cards, deckIndexes, pileCard) => {
+	let sequence = pileCard.cardNumber + pileCard.suit;
+
+	for (let index = 0; index < deckIndexes.length; index++) {
+		const card = cards[deckIndexes[index]];
+		sequence = sequence + card.cardNumber + card.suit;
 	}
 
-	return true;
+	return sequence;
+};
+
+const cardMatchingRegex = /^((([1-79AJQKT])([DSCH])(((\3[DSCH])+)|(([1-79AQKT])\4|(J)[DSCH])((\8|\9)[DSCH])*|8\4(([1-79AQKT])\4|(J)[DSCH])((\13|\14)[DSCH])*|8\4(8[DSCH]){0,3}8([DSCH])(([1-79AQKT])\19|(J)[DSCH])((\21|\22)[DSCH])*))|((8[DSCH])+8([DSCH])(([1-79AQKT])\27|(J)[DSCH])((\29|\30)[DSCH])*|(8([DSCH]))(([1-79AQKT])\34|(J)[DSCH])((\36|\37)[DSCH])*))$/g;
+
+export const checkCards = (deck, cards, deckIndexes) => {
+	const pileCard = deck[0];
+	const sequence = createCardSequence(cards, deckIndexes, pileCard);
+	return !!sequence.match(cardMatchingRegex);
 };
 
 export const moveCards = (selectedCards, deckCopy, handCopy) => {

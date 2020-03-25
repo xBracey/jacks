@@ -11,6 +11,9 @@ export const createCardArray = () => {
 				case 1:
 					cardNumber = "A";
 					break;
+				case 10:
+					cardNumber = "T";
+					break;
 				case 11:
 					cardNumber = "J";
 					break;
